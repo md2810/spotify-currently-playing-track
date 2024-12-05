@@ -55,7 +55,7 @@ app.get('/api', async (_, res) => {
     }
 
     res.setHeader('Content-Type', 'image/svg+xml')
-    res.send(`<svg fill="none" viewBox="0 0 1000 250" width="1000" height="250" xmlns="http://www.w3.org/2000/svg">
+    res.send(`<svg fill="none" viewBox="0 0 1000 250" width="100%" height="100vh" xmlns="http://www.w3.org/2000/svg">
       <foreignObject width="100%" height="100%">
         <div xmlns="http://www.w3.org/1999/xhtml">
           <style>
@@ -65,8 +65,9 @@ app.get('/api', async (_, res) => {
               padding: 0;
             }
 
+            /* Hintergrund der gesamten Seite schwarz */
             body {
-              background-color: #000; /* Schwarzer Hintergrund für den unteren Bereich */
+              background-color: #000; /* Schwarzer Hintergrund */
             }
 
             .external-link {
@@ -164,9 +165,11 @@ app.get('/api', async (_, res) => {
 })
 
 if (process.env.NODE_ENV !== 'production') {
-  app.listen(3000, () => {
-    console.log(`Server running at ${baseUrl}/api`)
-  })
+  setInterval(() => {
+    app.listen(3000, () => {
+      console.log(`Server running at ${baseUrl}/api`)
+    })
+  }, 1000); // Alle 1 Sekunde wird das Backend neu gestartet
 }
 
 module.exports = app
