@@ -31,9 +31,6 @@ app.get('/api', async (_, res) => {
     let cardImg: string = 'radial-gradient(#222922, #000500)'
     let cardTitle: string = 'No tracks'
     let cardSubtitle: string = ''
-    let cardLogoAnimation: string = 'none'
-    let cardTitleAnimation: string = 'none'
-    let cardSubtitleAnimation: string = 'none'
     let playing: boolean = false
 
     if (Object.keys(currentPlayingTrack.body).length > 0) {
@@ -53,9 +50,6 @@ app.get('/api', async (_, res) => {
         )})`
         cardTitle = currentPlayingTrackBodyItem.name
         cardSubtitle = currentPlayingTrackBodyItem.artists.map((artist) => artist.name).join(', ')
-        cardLogoAnimation = '4s cubic-bezier(.5, 0, .5, 1.2) 1s infinite bounce'
-        cardTitleAnimation = cardTitle.length > 10 ? `marquee ${cardTitle.length * 0.5}s linear infinite alternate` : 'none'
-        cardSubtitleAnimation = cardSubtitle.length > 10 ? `marquee ${cardSubtitle.length * 0.5}s linear infinite alternate` : 'none'
         playing = true
       }
     }
@@ -69,6 +63,10 @@ app.get('/api', async (_, res) => {
               box-sizing: border-box;
               margin: 0;
               padding: 0;
+            }
+
+            body {
+              background-color: #000; /* Schwarzer Hintergrund für den unteren Bereich */
             }
 
             .external-link {
@@ -85,6 +83,7 @@ app.get('/api', async (_, res) => {
               box-shadow: 0 3px 1px -2px rgba(0, 0, 0, .2), 0 2px 2px 0 rgba(0, 0, 0, .14), 0 1px 5px 0 rgba(0, 0, 0, .12);
               background-color: #1e1e1e;
               height: 25vh; /* 1/4 Bildschirmhöhe */
+              width: 100%; /* Ganze Breite des Bildschirms */
             }
 
             .card__img {
@@ -94,6 +93,7 @@ app.get('/api', async (_, res) => {
               border-top-left-radius: 16px;
               border-bottom-left-radius: 16px;
               background-position: center;
+              padding: 16px; /* Padding für das Bild */
               width: 30%;
               min-width: 150px;
             }
@@ -109,19 +109,6 @@ app.get('/api', async (_, res) => {
               border-bottom-right-radius: 16px;
             }
 
-            .card__logo {
-              display: flex;
-              justify-content: center;
-              align-items: center;
-              margin-bottom: 10px;
-            }
-
-            .card__logo > img {
-              width: 120px;
-              height: 60px;
-              object-fit: contain;
-            }
-
             .card__title {
               font: 600 20px 'Segoe UI', Ubuntu, Sans-Serif;
               color: #ffffff;
@@ -131,10 +118,6 @@ app.get('/api', async (_, res) => {
               display: flex;
               width: 100%;
               justify-content: flex-start;
-            }
-
-            .card__title > span {
-              animation: ${cardTitleAnimation};
             }
 
             .card__subtitle {
@@ -147,10 +130,6 @@ app.get('/api', async (_, res) => {
               justify-content: flex-start;
             }
 
-            .card__subtitle > span {
-              animation: ${cardSubtitleAnimation};
-            }
-
             .overlay {
               background-image: linear-gradient(transparent 0%, rgba(30, 215, 96, 0.1) 50%);
               content: '';
@@ -160,23 +139,11 @@ app.get('/api', async (_, res) => {
               right: 0;
               bottom: 0;
             }
-
-            @keyframes marquee {
-              0% {
-                transform: translateX(55%);
-              }
-              100% {
-                transform: translateX(-55%);
-              }
-            }
           </style>
           <a class="external-link" href="${externalLink}" target="_blank">
             <div class="card">
               <div class="card__img"></div>
               <div class="card__body">
-                <div class="card__logo">
-                  <img src="data:image/svg+xml;base64,${logoSvg}" />
-                </div>
                 <div class="card__title">
                   <span><![CDATA[${cardTitle}]]></span>
                 </div>
