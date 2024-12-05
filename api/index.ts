@@ -68,6 +68,7 @@ app.get('/api', async (_, res) => {
             /* Hintergrund der gesamten Seite schwarz */
             body {
               background-color: #000; /* Schwarzer Hintergrund */
+              margin: 0;
             }
 
             .external-link {
@@ -85,6 +86,9 @@ app.get('/api', async (_, res) => {
               background-color: #1e1e1e;
               height: 25vh; /* 1/4 Bildschirmhöhe */
               width: 100%; /* Ganze Breite des Bildschirms */
+              position: absolute; /* Fixiert den Kasten oben */
+              top: 0;
+              left: 0;
             }
 
             .card__img {
@@ -94,9 +98,11 @@ app.get('/api', async (_, res) => {
               border-top-left-radius: 16px;
               border-bottom-left-radius: 16px;
               background-position: center;
-              padding: 16px; /* Padding für das Bild */
+              padding: 8px; /* Padding für das Bild */
               width: 30%;
               min-width: 150px;
+              height: calc(100% - 16px); /* Höhe des Bildes angepasst */
+              box-sizing: border-box;
             }
 
             .card__body {
@@ -108,6 +114,7 @@ app.get('/api', async (_, res) => {
               width: 70%;
               border-top-right-radius: 16px;
               border-bottom-right-radius: 16px;
+              box-sizing: border-box;
             }
 
             .card__title {
