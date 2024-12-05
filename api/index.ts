@@ -32,7 +32,7 @@ app.get('/api', async (_, res) => {
     let cardTitle: string = 'No tracks'
     let cardSubtitle: string = ''
     let cardLogoAnimation: string = 'none'
-    let cardTitleAnimation: string = 'noise 2s linear infinite'
+    let cardTitleAnimation: string = 'none'
     let cardSubtitleAnimation: string = 'none'
     let playing: boolean = false
 
@@ -61,92 +61,90 @@ app.get('/api', async (_, res) => {
     }
 
     res.setHeader('Content-Type', 'image/svg+xml')
-    res.send(`<svg fill="none" viewBox="0 0 300 150" width="300" height="150" xmlns="http://www.w3.org/2000/svg">
+    res.send(`<svg fill="none" viewBox="0 0 1000 250" width="1000" height="250" xmlns="http://www.w3.org/2000/svg">
       <foreignObject width="100%" height="100%">
         <div xmlns="http://www.w3.org/1999/xhtml">
           <style>
             * {
               box-sizing: border-box;
+              margin: 0;
+              padding: 0;
             }
 
             .external-link {
               text-decoration: none;
               display: flex;
-              width: 300px;
-              height: 150px;
+              width: 100%;
+              height: 100%;
             }
 
             .card {
               display: flex;
               flex: 1;
+              border-radius: 16px;
               box-shadow: 0 3px 1px -2px rgba(0, 0, 0, .2), 0 2px 2px 0 rgba(0, 0, 0, .14), 0 1px 5px 0 rgba(0, 0, 0, .12);
-              border-radius: 4px;
+              background-color: #1e1e1e;
+              height: 25vh; /* 1/4 Bildschirmhöhe */
             }
 
             .card__img {
               background-image: ${cardImg};
               background-repeat: no-repeat;
               background-size: cover;
-              border-top-left-radius: 4px;
-              border-bottom-left-radius: 4px;
+              border-top-left-radius: 16px;
+              border-bottom-left-radius: 16px;
               background-position: center;
-              z-index: 10;
-              width: 150px;
+              width: 30%;
+              min-width: 150px;
             }
 
             .card__body {
-              background-color: #000000;
               display: flex;
               flex-direction: column;
-              align-items: center;
-              border-top-right-radius: 4px;
-              border-bottom-right-radius: 4px;
-              gap: 8px;
-              width: 150px;
+              justify-content: center;
+              align-items: flex-start;
+              padding: 16px;
+              width: 70%;
+              border-top-right-radius: 16px;
+              border-bottom-right-radius: 16px;
             }
 
             .card__logo {
-              flex: 1;
-              width: 100%;
               display: flex;
               justify-content: center;
               align-items: center;
+              margin-bottom: 10px;
             }
 
             .card__logo > img {
-              transform-origin: bottom;
-              animation: ${cardLogoAnimation};
-              width: 100px;
-              height: 50px;
+              width: 120px;
+              height: 60px;
               object-fit: contain;
             }
 
             .card__title {
-              flex: 1;
-              font: 600 14px 'Segoe UI', Ubuntu, Sans-Serif;
+              font: 600 20px 'Segoe UI', Ubuntu, Sans-Serif;
               color: #ffffff;
+              margin-bottom: 8px;
               white-space: nowrap;
               overflow: hidden;
               display: flex;
-              justify-content: center;
-              align-items: center;
               width: 100%;
+              justify-content: flex-start;
             }
 
             .card__title > span {
               animation: ${cardTitleAnimation};
             }
-            
+
             .card__subtitle {
-              flex: 1;
-              font: 600 12px 'Segoe UI', Ubuntu, Sans-Serif;
-              color: #ffffff;
+              font: 400 16px 'Segoe UI', Ubuntu, Sans-Serif;
+              color: #aaaaaa;
               white-space: nowrap;
               overflow: hidden;
               display: flex;
-              justify-content: center;
-              align-items: center;
               width: 100%;
+              justify-content: flex-start;
             }
 
             .card__subtitle > span {
@@ -155,76 +153,14 @@ app.get('/api', async (_, res) => {
 
             .overlay {
               background-image: linear-gradient(transparent 0%, rgba(30, 215, 96, 0.1) 50%);
-              background-size: 150px 2px;
               content: '';
               position: absolute;
-              right: 0;
               top: 0;
               left: 0;
+              right: 0;
               bottom: 0;
             }
 
-            @keyframes bounce {
-              0% {
-                transform: scale(1, 1) translateY(0) skew(0deg, 0deg);
-              }
-
-              3% {
-                transform: scale(1, 1) translateY(0) skew(0deg, 0deg);
-              }
-
-              5% {
-                transform: scale(1.1, .9) translateY(5px) skew(0deg, 0deg);
-              }
-
-              12% {
-                transform: scale(.9, 1.1) translateY(-35px) skew(25deg, 5deg);
-              }
-
-              13% {
-                transform: scale(.9, 1.1) translateY(-35px) skew(25deg, 5deg);
-              }
-
-              20% {
-                transform: scale(1.05, .95) translateY(0) skew(0deg, 0deg);
-              }
-
-              22% {
-                transform: scale(1, 1) translateY(-7px) skew(0deg, 0deg);
-              }
-
-              27% {
-                transform: scale(1, 1) translateY(0) skew(0deg, 0deg);
-              }
-
-              100% {
-                transform: scale(1, 1) translateY(0) skew(0deg, 0deg);
-              }
-            }
-
-            @keyframes noise {
-              0%, 3%, 5%, 42%, 44%, 63%, 65%, 92%, 94%, 100% {
-                opacity: 1;
-                transform: scaleY(1);
-              }
-              4.3% {
-                opacity: 1;
-                transform: scaleY(4);
-              }
-              43% {
-                opacity: 1;
-                transform: scaleX(10) rotate(60deg);
-              }
-              64.3% {
-                opacity: 1;
-                transform: scaleY(4);
-              }
-              93% {
-                opacity: 1;
-                transform: scaleX(20) rotate(-60deg);
-              }
-            }
-            
             @keyframes marquee {
               0% {
                 transform: translateX(55%);
@@ -253,7 +189,7 @@ app.get('/api', async (_, res) => {
           </a>
         </div>
       </foreignObject>
-      </svg>`)
+    </svg>`)
     res.end()
   } catch (error) {
     console.error(JSON.stringify(error))
